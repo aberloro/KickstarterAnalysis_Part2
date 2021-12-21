@@ -44,7 +44,7 @@ The last step is to convert the Pivot Table into a Line Chart that easily shows 
 - Y axis holds the counts of each outcome
 - X axis holds the month of the launch date
 
-    <img width="240" alt="Theater_Outcomes_vs_Launch" src="https://user-images.githubusercontent.com/93740725/147001801-78a36f87-4b94-4dce-82c5-06e3bf722b01.png">
+<img width="240" alt="Theater_Outcomes_vs_Launch" src="https://user-images.githubusercontent.com/93740725/147001801-78a36f87-4b94-4dce-82c5-06e3bf722b01.png">
 
 
 ### Analysis of Outcomes Based on Goals
@@ -55,7 +55,7 @@ This requires 1) identifying goal ranges and 2) creating a new summary table to 
 
 The rows in this new table are the goal ranges, and the columns are the number of each outcome, total outcomes, and percentage of each outcome:
 
-    <img width="323" alt="summary table 3" src="https://user-images.githubusercontent.com/93740725/147003030-98a8c8d8-7f6f-4d45-af58-33f6c15bbccb.png">
+<img width="323" alt="summary table 3" src="https://user-images.githubusercontent.com/93740725/147003030-98a8c8d8-7f6f-4d45-af58-33f6c15bbccb.png">
 
 
 The next step is to filter data from the full set into our table. At each goal range Column B will count the number of occurrences of successful plays, Column C will hold the number of occurrences of failed plays, and Column D will hold the number of cancelled plays. 
@@ -137,7 +137,7 @@ A second limitation of this set is in reference to the Play Outcomes Vs Goals ta
 A final limitation of this data is that it provides no context into the rest of the economy of investor spending.  Adding data from the GDP, and how much spending went into each parent category overall (not just through Kickstarter) would be helpful. For example, how would a recession, a boom, or pandemic impact investor behavior or impact the number of launches? 
 
 
-### - Additional Tables / Graphs 
+### Additional Tables / Graphs 
 
 Louise might benefit from insight into how the duration of a campaign impacts its outcome.  We could determine this by subtracting the launch date from the deadline, and looking at the outcomes (successful, failed, and cancelled) for projects within in a set range of durations (similar to how we did a set range of goals.) That data would be put in a summary table and line graph.  
 
