@@ -6,7 +6,7 @@
 
 The purpose of this analysis is to provide our client, Louise, with an analysis of the relationship of campaign outcome vs funding goal and outcome vs launch date for Kickstarter campaigns in the Theater category around the globe.
 
-Background: 
+**Background** 
 
 Louise has already Kickstarted her American play, *Fever*, and nearly collected her goal of $10,000.  Previous analysis with this client has shown us that: 
 - Theater is a strong category of Kickstarters, with the subcategory of Plays being both popular and generally successful.  
@@ -25,7 +25,6 @@ This analysis was performed using Excel functions, Excel computations, and visua
 ### Analysis of Outcomes Based on Launch Date
 
 The first step to analyze Outcomes vs Launch Date is to get the needed Date information from our current data.  The data was given in a unix timestamp format, but we need a standard MM/DD/YYYY. There were 2 steps:
-
 - Convert unix timestamp of campaign’s launch time into a date we can easily read
     - =(((x/60)/60)/24) + DATE(1870,1,1)
     - where x= the reference cell in the Launched_At column.  
@@ -36,69 +35,57 @@ The first step to analyze Outcomes vs Launch Date is to get the needed Date info
 
 The next step is use a Pivot Table to filter only the relevant data out of the larger data set:
 - Filters set to years and parent category to allow isolation of Theater projects in time
-- Fields set as shown
- 
- 
-IMAGE PIVOT SET UP OUTCOME VS DATE
+- Fields are set as shown
 
-- Extra input from Row Field is deleted so only “date created conversion” is listed in the PivotTable Fields box and so “months” show up under Row Labels in the Pivot Table
+     <img width="524" alt="pivot set up outcome vs date" src="https://user-images.githubusercontent.com/93740725/147001663-15dbde84-0286-4b58-9107-a07e5edf302c.png">
+ - Extra input from the Row Field is deleted so only “date created conversion” is listed in the PivotTable Fields box and so “months” show up under Row Labels in the Pivot Table
 
 The last step is to convert the Pivot Table into a Line Chart that easily shows outcome trends over time:
-
 - Y axis holds the counts of each outcome
 - X axis holds the month of the launch date
 
-IMAGE THEATER OUTCOME VS LAUNCH
-
+    <img width="240" alt="Theater_Outcomes_vs_Launch" src="https://user-images.githubusercontent.com/93740725/147001801-78a36f87-4b94-4dce-82c5-06e3bf722b01.png">
 
 
 ### Analysis of Outcomes Based on Goals
 
-
 To look at trends between outcomes and goal size, we need to pull only relevant data from our complete data set.  
-
 
 This requires 1) identifying goal ranges and 2) creating a new summary table to hold the filtered data by outcome and subcategory in each goal range.
 
-
 The rows in this new table are the goal ranges, and the columns are the number of each outcome, total outcomes, and percentage of each outcome:
 
+    <img width="323" alt="summary table 3" src="https://user-images.githubusercontent.com/93740725/147003030-98a8c8d8-7f6f-4d45-af58-33f6c15bbccb.png">
 
-IMAGE SUMMARY TALE OF OUTCOMES VS GOAL RANGE
 
-The =COUNTIFS function is used to filter data from the full set into our table. At each goal range Column B will count the number of occurrences of successful plays, Column C will hold the number of occurrences of failed plays, and Column D will hold the number of cancelled plays. 
+The next step is to filter data from the full set into our table. At each goal range Column B will count the number of occurrences of successful plays, Column C will hold the number of occurrences of failed plays, and Column D will hold the number of cancelled plays. 
 
 Count the number of occurrences of each outcome of plays successful, failed, cancelled) in each of a certain goal range with =COUNTIFS:
 
 - Sample formula to identify successful plays with a goal range of $1000 to $4999
-o =COUNTIFS(Kickstarter!$F:$F,"=successful", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, ">=1000", Kickstarter!$D:$D, "<=4999")
+    - =COUNTIFS(Kickstarter!$F:$F,"=successful", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, ">=1000", Kickstarter!$D:$D, "<=4999")
 - Sample formula to identify failed plays with a goal range over $50,000
-o =COUNTIFS(Kickstarter!$F:$F,"=failed", Kickstarter!$R:$R, "=plays",  Kickstarter!$D:$D, ">=50000")
+    - =COUNTIFS(Kickstarter!$F:$F,"=failed", Kickstarter!$R:$R, "=plays",  Kickstarter!$D:$D, ">=50000")
 - Sample formula to identify cancelled plays with a goal of less than $1000
-o =COUNTIFS(Kickstarter!$F:$F,"=canceled", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, "<1000")
+    - =COUNTIFS(Kickstarter!$F:$F,"=canceled", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, "<1000")
 
-IMAGE SUMMARY TABLE 2
 
 After filtering in the needed data, calculate the total and percentage of each outcome. 
 	
 - Find the sum of the total projects in each goal range
-o =SUM(Bx:Dx) 
-o where x is the appropriate row and we are adding values from columns B, C, and D
+    - =SUM(Bx:Dx) 
+    - where x is the appropriate row and we are adding values from columns B, C, and D
 -  Calculate percentage of each outcome 
-o Sample: percentage calculation of successful projects =Bx/Ex
-o Where x is the appropriate row or goal range and
-o Column E holds the sum of projects in that goal range and
-o Column B holds the number of successful projects in the specific goal range 
-o Set cell format to percentage
-
- IMAGE SUMMARY TABLE 3
+    - Sample: percentage calculation of successful projects =Bx/Ex
+    - Where x is the appropriate row or goal range and
+    - Column E holds the sum of projects in that goal range and
+    - Column B holds the number of successful projects in the specific goal range 
+    - Set cell format to percentage
 
 
 The last step is to create a line chart showing Outcomes of Plays vs Ranges of Goals:
 
-
-IMAGE OUTCMES VS GOALS
-
+<img width="251" alt="Outcomes_vs_Goals" src="https://user-images.githubusercontent.com/93740725/147002556-c3780865-15d8-48d2-ad95-f06bec91118c.png">
 
 
 ### Challenges and Difficulties Encountered
@@ -107,22 +94,22 @@ The biggest challenge I had was getting my =COUNTIFS function to work.  I did *n
 
 My COUNTIFS calculations were all returning a ZERO result, which is a red flag. I though initially I had entered part of the function incorrectly, so I ran trouble shooting by first isolating just one component of the COUNTIFS formula at a time. 
 - Was my formula counting successful outcomes?
-o =COUNTIF(Kickstarter!F:F,"=successful")
-o I got numbers so YES, this part of my formula was correct!
+    - =COUNTIF(Kickstarter!F:F,"=successful")
+    - I got numbers so YES, this part of my formula was correct!
 - Was my formula counting the Play subcategory?
-o =COUNTIF (Kickstarter!R:R, "=play") 
-o ALL ZEROS, oh no!  The subcategory is listed as PLAYS plural, not singular as I had initially typed. My typo prevented excel from seeking out the right results. There were zero “play”s but a number of “plays”
-o The correct formula reads =COUNTIF (Kickstarter!R:R, "=plays") 
+    - =COUNTIF (Kickstarter!R:R, "=play") 
+    - ALL ZEROS, oh no!  The subcategory is listed as PLAYS plural, not singular as I had initially typed. My typo prevented excel from seeking out the right results. There were zero “play”s but a number of “plays”
+    - The correct formula reads =COUNTIF (Kickstarter!R:R, "=plays") 
 - Was my formula counting the number of campaigns in each goal range?
-o =COUNTIF(Kickstarter!D:D, "<1000") 
-o ALL ZEROS AGAIN! So NO the formula was not counting any campaigns, and a visual check of the data shows that there *are* in-fact plays in this goal range.  
-o This was corrected by changing the format of column D from general to accounting. 
+    - =COUNTIF(Kickstarter!D:D, "<1000") 
+    - ALL ZEROS AGAIN! So NO the formula was not counting any campaigns, and a visual check of the data shows that there *are* in-fact plays in this goal range.  
+    - This was corrected by changing the format of column D from general to accounting. 
 
 After I was able to get results in each goal range for successful plays and for failed plays, I had a problem getting results for cancelled plays: all zeros again.  I started trouble-shooting using the same method as above and found out that I spelled “cancelled” (British spelling) instead of “canceled” (American spelling.) I got all zeros again after correcting my spelling.  A visual check of the data after filtering for cancelled plays shows there were none. 
 
 A second challenge, for me, was in the visual interpretation of the Outcomes vs Goals data.  The two plot lines of the Outcomes Vs Goals chart are exact mirror images to each other.  For me, the two lines are redundant and make the chart hard to read.  I personally find it easier to read if only either Successful Plays or Failed plays is shown, like below for example. 
 
-IMAGE SUCCESSFUL OUTCOME VS GOAL
+<img width="251" alt="Successful Outcomes vs Goal" src="https://user-images.githubusercontent.com/93740725/147003321-77a9f081-4352-4d4e-af0a-f13d78213787.png">
 
 ## Results
 
