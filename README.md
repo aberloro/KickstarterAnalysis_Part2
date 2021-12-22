@@ -24,66 +24,68 @@ This analysis was performed using Excel functions, Excel computations, and visua
 
 ### Analysis of Outcomes Based on Launch Date
 
-The first step to analyze Outcomes vs Launch Date is to get the needed Date information from our current data.  The data was given in a unix timestamp format, but we need a standard MM/DD/YYYY. There were 2 steps:
+**The first step to analyze Outcomes vs Launch Date is to get the needed Date information from our current data.  The data was given in a unix timestamp format, but we need a standard MM/DD/YYYY. There were 2 steps:**
 - Convert unix timestamp of campaign’s launch time into a date we can easily read
-    - =(((x/60)/60)/24) + DATE(1870,1,1)
-    - where x= the reference cell in the Launched_At column.  
-    - Output is visible as MM/DD/YYYY
-- Isolate just the year out of MM/DD/YYY format from above conversion
-    - =YEAR(x) 
-    - where x is the appropriate reference cell in the Date Created Conversion column
 
-The next step is use a Pivot Table to filter only the relevant data out of the larger data set:
+        - MM/DD/YYYY = (((x/60)/60)/24) + DATE(1870,1,1)
+        - where x= the reference cell in the Launched_At column.  
+- Isolate just the year out of MM/DD/YYY format from above conversion
+
+        - YYYY=YEAR(x) 
+        - where x is the appropriate reference cell in the Date Created Conversion column
+
+**The next step is use a Pivot Table to filter only the relevant data out of the larger data set:**
 - Filters set to years and parent category to allow isolation of Theater projects in time
 - Fields are set as shown
 
      <img width="524" alt="pivot set up outcome vs date" src="https://user-images.githubusercontent.com/93740725/147001663-15dbde84-0286-4b58-9107-a07e5edf302c.png">
  - Extra input from the Row Field is deleted so only “date created conversion” is listed in the PivotTable Fields box and so “months” show up under Row Labels in the Pivot Table
 
-The last step is to convert the Pivot Table into a Line Chart that easily shows outcome trends over time:
+**The last step is to convert the Pivot Table into a Line Chart that easily shows outcome trends over time:**
 - Y axis holds the counts of each outcome
 - X axis holds the month of the launch date
 
-<img width="240" alt="Theater_Outcomes_vs_Launch" src="https://user-images.githubusercontent.com/93740725/147001801-78a36f87-4b94-4dce-82c5-06e3bf722b01.png">
+    <img width="240" alt="Theater_Outcomes_vs_Launch" src="https://user-images.githubusercontent.com/93740725/147001801-78a36f87-4b94-4dce-82c5-06e3bf722b01.png">
 
 
 ### Analysis of Outcomes Based on Goals
 
-To look at trends between outcomes and goal size, we need to pull only relevant data from our complete data set.  
-
-This requires 1) identifying goal ranges and 2) creating a new summary table to hold the filtered data by outcome and subcategory in each goal range.
-
-The rows in this new table are the goal ranges, and the columns are the number of each outcome, total outcomes, and percentage of each outcome:
+To look at trends between outcomes and goal size, we need to filter the relevant data from our complete data set.  This requires identifying goal ranges and creating a new summary table to hold the filtered data by outcome and subcategory in each goal range. The rows in this new table are the goal ranges, and the columns are the number of each outcome, total outcomes, and percentage of each outcome:
 
 <img width="323" alt="summary table 3" src="https://user-images.githubusercontent.com/93740725/147003030-98a8c8d8-7f6f-4d45-af58-33f6c15bbccb.png">
 
 
-The next step is to filter data from the full set into our table. At each goal range Column B will count the number of occurrences of successful plays, Column C will hold the number of occurrences of failed plays, and Column D will hold the number of cancelled plays. 
-
-Count the number of occurrences of each outcome of plays successful, failed, cancelled) in each of a certain goal range with =COUNTIFS:
+**Use COUNTIFS to count the number of occurrences of each outcome of plays successful, failed, cancelled) in each of a certain goal range:**
 
 - Sample formula to identify successful plays with a goal range of $1000 to $4999
-    - =COUNTIFS(Kickstarter!$F:$F,"=successful", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, ">=1000", Kickstarter!$D:$D, "<=4999")
+
+        - =COUNTIFS(Kickstarter!$F:$F,"=successful", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, ">=1000", Kickstarter!$D:$D, "<=4999")
+         
 - Sample formula to identify failed plays with a goal range over $50,000
-    - =COUNTIFS(Kickstarter!$F:$F,"=failed", Kickstarter!$R:$R, "=plays",  Kickstarter!$D:$D, ">=50000")
+
+        - =COUNTIFS(Kickstarter!$F:$F,"=failed", Kickstarter!$R:$R, "=plays",  Kickstarter!$D:$D, ">=50000")
 - Sample formula to identify cancelled plays with a goal of less than $1000
-    - =COUNTIFS(Kickstarter!$F:$F,"=canceled", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, "<1000")
+
+        - =COUNTIFS(Kickstarter!$F:$F,"=canceled", Kickstarter!$R:$R, "=plays", Kickstarter!$D:$D, "<1000")
 
 
-After filtering in the needed data, calculate the total and percentage of each outcome. 
-	
-- Find the sum of the total projects in each goal range
-    - =SUM(Bx:Dx) 
-    - where x is the appropriate row and we are adding values from columns B, C, and D
+**After filtering in the needed data, calculate the total and percentage of each outcome.**	
+- Find the sum of the total projects in each goal range 
+
+        - =SUM(Bx:Dx) 
+        - where x is the appropriate row and we are adding values from columns B, C, and D
+
 -  Calculate percentage of each outcome 
-    - Sample: percentage calculation of successful projects =Bx/Ex
-    - Where x is the appropriate row or goal range and
-    - Column E holds the sum of projects in that goal range and
-    - Column B holds the number of successful projects in the specific goal range 
-    - Set cell format to percentage
+
+        - Sample percentage calculation of successful projects 
+        - =Bx/Ex
+        - Where x is the appropriate row or goal range and
+        - Column E holds the sum of projects in that goal range and
+        - Column B holds the number of successful projects in the specific goal range
+        - Set cell format to percentage
 
 
-The last step is to create a line chart showing Outcomes of Plays vs Ranges of Goals:
+**The last step is to create a line chart showing Outcomes of Plays vs Ranges of Goals:**
 
 <img width="251" alt="Outcomes_vs_Goals" src="https://user-images.githubusercontent.com/93740725/147002556-c3780865-15d8-48d2-ad95-f06bec91118c.png">
 
@@ -93,17 +95,26 @@ The last step is to create a line chart showing Outcomes of Plays vs Ranges of G
 The biggest challenge I had was getting my =COUNTIFS function to work.  I did *not* initially notice that there needed to be a format conversion of goal data. The goal data was formatted to general, and it needed to be in accounting for greater-than and less-than queries to work. 
 
 My COUNTIFS calculations were all returning a ZERO result, which is a red flag. I though initially I had entered part of the function incorrectly, so I ran trouble shooting by first isolating just one component of the COUNTIFS formula at a time. 
+
+
 - Was my formula counting successful outcomes?
+
     - =COUNTIF(Kickstarter!F:F,"=successful")
     - I got numbers so YES, this part of my formula was correct!
+
+
 - Was my formula counting the Play subcategory?
     - =COUNTIF (Kickstarter!R:R, "=play") 
     - ALL ZEROS, oh no!  The subcategory is listed as PLAYS plural, not singular as I had initially typed. My typo prevented excel from seeking out the right results. There were zero “play”s but a number of “plays”
     - The correct formula reads =COUNTIF (Kickstarter!R:R, "=plays") 
+
+
 - Was my formula counting the number of campaigns in each goal range?
+
+
     - =COUNTIF(Kickstarter!D:D, "<1000") 
     - ALL ZEROS AGAIN! So NO the formula was not counting any campaigns, and a visual check of the data shows that there *are* in-fact plays in this goal range.  
-    - This was corrected by changing the format of column D from general to accounting. 
+    - This was corrected by changing the *format* of column D from *general* to *accounting*. 
 
 After I was able to get results in each goal range for successful plays and for failed plays, I had a problem getting results for cancelled plays: all zeros again.  I started trouble-shooting using the same method as above and found out that I spelled “cancelled” (British spelling) instead of “canceled” (American spelling.) I got all zeros again after correcting my spelling.  A visual check of the data after filtering for cancelled plays shows there were none. 
 
@@ -117,9 +128,9 @@ A second challenge, for me, was in the visual interpretation of the Outcomes vs 
 
 The Outcomes based on Launch Date Chart Shows that the plot line for the number of failed Theater Campaigns lies below and closely follows the shape of the plot line of Successful Theater Campaigns.  So *in general*, campaigns are more likely to succeed than fail regardless of the launch month.  There are 2 notable exceptions with actionable applications. 
 
-**One**, there is a much higher distance between the successful vs failed campaign plot lines in May, with that gap closing as the year progresses.  Even though there were more over-all campaign launches in May, there was a higher percentage of successful vs failed.  This means May is a great month to launch.
+ - **One**, there is a much higher distance between the successful vs failed campaign plot lines in May, with that gap closing as the year progresses.  Even though there were more over-all campaign launches in May, there was a higher percentage of successful vs failed.  This means May is a great month to launch.
 
-**Two**, the gap between successful and failed Theater campaign launches is essentially closed by December.  This means as the year progresses, there are a higher percentage of failures compared to the optimal launch date of May.  Avoid launches in the last quarter, especially December. 
+ - **Two**, the gap between successful and failed Theater campaign launches is essentially closed by December.  This means as the year progresses, there are a higher percentage of failures compared to the optimal launch date of May.  Avoid launches in the last quarter, especially December. 
 
 
 ### Conclusions and Limitations for Play Outcomes vs Goals
